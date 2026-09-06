@@ -4,8 +4,6 @@
 
 use authenticate::{Acceptance, Presented};
 use context::{Alignment, OnMisalignment};
-use std::error::Error;
-use std::fmt;
 use stream::Stream;
 use xcore::{Arriving, ArtifactId};
 
@@ -157,18 +155,7 @@ impl ReceivedStream {
     }
 }
 
-#[derive(Debug)]
-pub struct ReceiveError {
-    pub message: String,
-}
-
-impl fmt::Display for ReceiveError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str(&self.message)
-    }
-}
-
-impl Error for ReceiveError {}
+xcore::declare_error!(ReceiveError);
 
 pub trait ReceiveTransport: Send + Sync {
     fn technology(&self) -> &'static str;
